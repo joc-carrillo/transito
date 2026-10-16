@@ -2,8 +2,8 @@
 
 App mobile-first (Next.js App Router + Supabase) para registrar entradas y salidas de vehículos escaneando un código QR.
 
-- **Escanear** (`/`): cámara + búsqueda manual por placa; Bottom Sheet con foto, nombres y botones "Registrar Entrada / Salida".
-- **Estado** (`/dashboard`): Kanban "En Lugar / Ausentes" (pestañas deslizables en móvil, dos columnas en tablet/PC), en tiempo real.
+- **Estado** (`/`): Kanban "En Lugar / Ausentes" (pestañas deslizables en móvil, dos columnas en tablet/PC), en tiempo real. Es la pantalla de inicio.
+- **Escanear** (`/escanear`): cámara + búsqueda manual por placa; Bottom Sheet con foto, nombres y botones "Registrar Entrada / Salida".
 - **Afiliados** (`/afiliados`): alta por pasos (tipo, foto, vehículos) y QR descargable por vehículo.
 - **Informes** (`/informes`): movimientos agrupados por día con filtro de fechas.
 

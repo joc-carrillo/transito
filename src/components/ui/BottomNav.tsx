@@ -9,9 +9,9 @@ import { getNavIntent, setNavIntent, subscribeNavIntent } from "@/lib/nav-intent
 import { cn } from "@/lib/utils";
 
 const items = [
-  { href: "/dashboard", label: "Estado", icon: LayoutGrid },
+  { href: "/", label: "Estado", icon: LayoutGrid },
   { href: "/afiliados", label: "Afiliados", icon: UserPlus },
-  { href: "/", label: "Escanear", icon: ScanLine },
+  { href: "/escanear", label: "Escanear", icon: ScanLine },
   { href: "/informes", label: "Informes", icon: FileText },
   { href: "/perfil", label: "Perfil", icon: CircleUser },
 ] as const;

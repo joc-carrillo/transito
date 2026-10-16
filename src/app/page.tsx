@@ -1,5 +1,8 @@
-import { ScannerView } from "@/components/scanner/ScannerView";
+import type { Metadata } from "next";
+import { KanbanBoard } from "@/components/dashboard/KanbanBoard";
 
-export default function ScannerPage() {
-  return <ScannerView />;
+export const metadata: Metadata = { title: "Estado · Tránsito" };
+
+export default function HomePage() {
+  return <KanbanBoard />;
 }

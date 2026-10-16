@@ -1,8 +1,5 @@
-import type { Metadata } from "next";
-import { KanbanBoard } from "@/components/dashboard/KanbanBoard";
-
-export const metadata: Metadata = { title: "Estado · Tránsito" };
+import { redirect } from "next/navigation";
 
 export default function DashboardPage() {
-  return <KanbanBoard />;
+  redirect("/");
 }
