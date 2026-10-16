@@ -6,10 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:setup": "bash scripts/db-setup.sh"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.118.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^14.3.0",
+    "html5-qrcode": "^2.3.8",
+    "lucide-react": "^1.57.0",
+    "nanoid": "^6.0.2",
     "next": "16.4.2",
+    "qrcode.react": "^4.2.0",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },

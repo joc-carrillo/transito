@@ -1,26 +1,71 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --color-canvas: #f3f3f1;
+  --color-ink: #0c0c0e;
+  --color-muted: #6e6e73;
+  --color-line: #e7e7e4;
+  --color-soft: #ececea;
+
+  --color-entry: #12b76a;
+  --color-entry-soft: #dcfae6;
+  --color-exit: #f04438;
+  --color-exit-soft: #fee4e2;
+  --color-accent: #3b5bfd;
+  --color-accent-soft: #e4e9ff;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  color-scheme: light;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+  text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  overscroll-behavior-y: none;
+}
+
+input,
+select,
+textarea {
+  font-size: 16px; /* evita el zoom automático de iOS */
+}
+
+@utility pb-safe {
+  padding-bottom: var(--safe-bottom);
+}
+
+@utility pt-safe {
+  padding-top: var(--safe-top);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* html5-qrcode inyecta su propio video; lo hacemos llenar el contenedor */
+#qr-reader video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+}
+#qr-reader {
+  border: none !important;
+}
+#qr-reader #qr-shaded-region {
+  display: none !important;
 }

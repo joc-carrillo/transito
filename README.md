@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tránsito · Control de acceso vehicular con QR
 
-## Getting Started
+App mobile-first (Next.js App Router + Supabase) para registrar entradas y salidas de vehículos escaneando un código QR.
 
-First, run the development server:
+- **Escanear** (`/`): cámara + búsqueda manual por placa; Bottom Sheet con foto, nombres y botones "Registrar Entrada / Salida".
+- **Estado** (`/dashboard`): Kanban "En Lugar / Ausentes" (pestañas deslizables en móvil, dos columnas en tablet/PC), en tiempo real.
+- **Afiliados** (`/afiliados`): alta por pasos (tipo, foto, vehículos) y QR descargable por vehículo.
+- **Informes** (`/informes`): movimientos agrupados por día con filtro de fechas.
+
+## Configuración
+
+1. Crea un proyecto en [supabase.com](https://supabase.com).
+2. Copia `.env.local.example` a `.env.local` y completa los valores (Project Settings → API / Database).
+3. Crea las tablas, la vista, el bucket `owner-photos` y las políticas:
+
+   ```bash
+   npm run db:setup
+   ```
+
+   El script ([scripts/db-setup.sh](scripts/db-setup.sh)) lee `.env.local` y ejecuta `supabase db push` contra el pooler de sesión (IPv4) usando la contraseña de la base.
+   Alternativa manual: pega `supabase/migrations/20261015000000_init.sql` en el SQL Editor del panel.
+
+## Desarrollo
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+La cámara solo funciona en `localhost` o bajo HTTPS. Para probar desde el celular en la misma red:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npx next dev --experimental-https -H 0.0.0.0
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+y abre `https://<ip-de-tu-pc>:3000` aceptando el certificado.
 
-## Learn More
+## Notas
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Login con correo y contraseña (Supabase Auth). Cualquiera puede registrarse y todos los usuarios tienen el mismo acceso; sin sesión, las políticas RLS bloquean lectura y escritura.
+- La app no usa confirmación por correo: desactiva **Confirm email** en Authentication → Sign In / Providers → Email. Así el usuario entra directo al registrarse y los cambios de correo se aplican al instante.
+- Cada vehículo tiene un `qr_code_hash` único (16 caracteres); el QR codifica solo ese valor.
