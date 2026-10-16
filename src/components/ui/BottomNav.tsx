@@ -1,17 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { FileText, LayoutGrid, ScanLine, UserPlus } from "lucide-react";
+import { CircleUser, FileText, LayoutGrid, ScanLine, UserPlus } from "lucide-react";
+import { getNavIntent, setNavIntent, subscribeNavIntent } from "@/lib/nav-intent";
 import { cn } from "@/lib/utils";
 
 const items = [
-  { href: "/", label: "Escanear", icon: ScanLine },
   { href: "/dashboard", label: "Estado", icon: LayoutGrid },
   { href: "/afiliados", label: "Afiliados", icon: UserPlus },
+  { href: "/", label: "Escanear", icon: ScanLine },
   { href: "/informes", label: "Informes", icon: FileText },
+  { href: "/perfil", label: "Perfil", icon: CircleUser },
 ] as const;
 
 function isActive(pathname: string, href: string) {
@@ -21,11 +23,8 @@ function isActive(pathname: string, href: string) {
 export function BottomNav() {
   const pathname = usePathname();
   // El indicador se mueve al tocar, sin esperar a que la nueva ruta termine de renderizar.
-  const [pending, setPending] = useState<{ href: string; from: string } | null>(
-    null,
-  );
-  const current =
-    pending && pending.from === pathname ? pending.href : pathname;
+  const pending = useSyncExternalStore(subscribeNavIntent, getNavIntent, () => null);
+  const current = pending && pending.from === pathname ? pending.href : pathname;
 
   return (
     <nav
@@ -50,9 +49,9 @@ export function BottomNav() {
                 href={href}
                 prefetch
                 aria-current={isActive(pathname, href) ? "page" : undefined}
-                onClick={() => setPending({ href, from: pathname })}
+                onClick={() => setNavIntent({ href, from: pathname })}
                 className={cn(
-                  "relative flex h-14 flex-col items-center justify-center gap-0.5 rounded-full text-[11px] font-semibold transition-colors duration-150 outline-none",
+                  "relative flex h-14 flex-col items-center justify-center gap-0.5 rounded-full text-[10px] font-semibold transition-colors duration-150 outline-none",
                   "focus-visible:ring-4 focus-visible:ring-white/30",
                   "lg:h-auto lg:w-24 lg:gap-1.5 lg:rounded-3xl lg:py-4 lg:text-xs",
                   active ? "text-ink" : "text-white/60 hover:text-white",
