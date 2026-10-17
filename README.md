@@ -38,5 +38,5 @@ y abre `https://<ip-de-tu-pc>:3000` aceptando el certificado.
 ## Notas
 
 - Login con correo y contraseña (Supabase Auth). Cualquiera puede registrarse y todos los usuarios tienen el mismo acceso; sin sesión, las políticas RLS bloquean lectura y escritura.
-- La app no usa confirmación por correo: desactiva **Confirm email** en Authentication → Sign In / Providers → Email. Así el usuario entra directo al registrarse y los cambios de correo se aplican al instante.
+- La app no pide confirmar el correo. Aunque **Confirm email** siga activo en el panel de Supabase, un trigger marca el correo como confirmado al crear la cuenta y el usuario entra directo.
 - Cada vehículo tiene un `qr_code_hash` único (16 caracteres); el QR codifica solo ese valor.
